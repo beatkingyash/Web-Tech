@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TO DO List</title>
+    <style>
+        body {
+            font-family: Georgia, "Times New Roman", serif;
+            text-align: center;
+        }
+
+        #todoList {
+            margin-top: 20px;
+        }
+
+        .item {
+            display: block;                      /* Each item on a new line */
+            background-color: #f0f0f0;
+            padding: 8px 12px;
+            margin: 5px auto;
+            width: 200px;
+            border-radius: 4px;
+            font-size: 18px;
+            position: relative;
+        }
+
+        .remove {
+            color: red;
+            margin-left: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            float: right;
+        }
+
+        input[type="text"] {
+            padding: 6px;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 6px 14px;
+            background-color: blue;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+    </style>
+</head>
+<body bgcolor="white">
+    <h1>TO-DO List</h1>
+
+    <form onsubmit="return addclick()" method="post">
+        <input type="text" id="id" name="id" placeholder="Enter your ID"> 
+        <button type="submit">ADD</button><br><br>
+    </form>
+
+    <div id="todoList"></div>
+
+    <script>
+        function addclick() {
+            const idInput = document.getElementById("id");
+            const id = idInput.value.trim();
+
+            if (id === "") {
+                alert("ID is Required.\nPlease Enter The ID.");
+                idInput.focus();
+                return false; // Prevent form submission
+            }
+
+            addToList(id);
+            idInput.value = ""; // Clear input after adding
+            idInput.focus();
+            return false; // Prevent form submission (no page refresh)
+        }
+
+        function addToList(id) {
+            const todoList = document.getElementById("todoList");
+
+            const itemDiv = document.createElement("div");
+            itemDiv.className = "item";
+            itemDiv.textContent = id;
+
+            // Add cross symbol for removal
+            const deleteB = document.createElement("span");
+            deleteB.className = "remove";
+            deleteB.textContent = "×";
+            
+            deleteB.onclick = function() {
+                todoList.removeChild(itemDiv);
+            };
+
+            itemDiv.appendChild(deleteB);
+            todoList.appendChild(itemDiv);
+        }
+    </script>
+</body>
+</html>
